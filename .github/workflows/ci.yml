@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+      - 'main'
+
+env:
+  MONGO_URI: 'mongodb://test:testpassword@localhost:27017'\
+
+jobs:
+
+  ci:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['16'] # '12', '14'
+        os: [ubuntu-latest]
+
+    name: "🧪 CI"
+    steps:
+      - name: "☁️ Check out Git Repository"
+        uses: actions/checkout@v2
+
+      - name: "🔧 Set up Node"
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: "⚙️ Get Yarn Cache Directory Path"
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: "⚡️ Cache Dependencies"
+        uses: actions/cache@v1
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: "📦 Install Dependencies"
+        # if: steps.yarn-cache.outputs.cache-hit != 'true' # Over here!
+        run: yarn
+
+      - name: "🏗️ Build"
+        # docker-compose -f docker-compose.yml up -d
+        run: |
+          docker-compose -f docker-compose.yml build
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: '5.0' # ['4.2', '4.4', '5.0']
+          mongodb-username: test
+          mongodb-password: testpassword
+          mongodb-db: test
+
+      # - name: "⚙️ Seed the Database"
+      #   run: mongoimport --collection=images --db=test --file=./tests/data.json --username test --password testpassword
+
+      - name: "✅ Test"
+        # run: docker exec nodejs_api yarn run test
+        run: |
+          yarn run test
