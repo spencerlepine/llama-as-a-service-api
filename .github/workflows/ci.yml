@@ -7,7 +7,7 @@ on:
       - 'main'
 
 env:
-  MONGO_URI: 'mongodb://test:testpassword@localhost:27017'\
+  MONGO_URI: 'mongodb://test:testpassword@localhost:27017'
 
 jobs:
 
@@ -48,6 +48,8 @@ jobs:
 
       - name: "🏗️ Build"
         # docker-compose -f docker-compose.yml up -d
+        env:
+          PORT: 4000
         run: |
           docker-compose -f docker-compose.yml build
 
