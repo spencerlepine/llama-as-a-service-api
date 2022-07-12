@@ -20,7 +20,7 @@ jobs:
 
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name:  ${{ secrets.HEROKU_IMAGE_API_ID }} #Must be unique in Heroku
+          heroku_app_name:  ${{ secrets.HEROKU_IMAGES_API_ID }} #Must be unique in Heroku
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
         env:
           NODE_ENV: production

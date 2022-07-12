@@ -1,13 +1,13 @@
 # LaaS Image API Service
 
-[![CI](https://github.com/llama-as-a-service/image-service/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/llama-as-a-service/image-service/actions/workflows/ci.yml) [![Publish Docker](https://github.com/llama-as-a-service/image-service/actions/workflows/publish-to-ghcr.yml/badge.svg?branch=main)](https://github.com/llama-as-a-service/image-service/actions/workflows/publish-to-ghcr.yml)[![Stable Version](https://img.shields.io/github/v/tag/llama-as-a-service/image-service)](https://img.shields.io/github/v/tag/llama-as-a-service/image-service) [![Latest Release](https://img.shields.io/github/v/release/llama-as-a-service/image-service?color=%233D9970)](https://img.shields.io/github/v/tag/llama-as-a-service/image-service?color=%233D9970)
+[![CI](https://github.com/llama-as-a-service/images-service/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/llama-as-a-service/images-service/actions/workflows/ci.yml) [![Heroku Deploy](https://github.com/llama-as-a-service/images-service/actions/workflows/heroku-deploy.yml/badge.svg?branch=main)](https://github.com/llama-as-a-service/images-service/actions/workflows/heroku-deploy.yml) [![Publish Docker](https://github.com/llama-as-a-service/images-service/actions/workflows/publish-to-ghcr.yml/badge.svg?branch=main)](https://github.com/llama-as-a-service/images-service/actions/workflows/publish-to-ghcr.yml) [![Stable Version](https://img.shields.io/github/v/tag/llama-as-a-service/images-service)](https://img.shields.io/github/v/tag/llama-as-a-service/images-service) [![Latest Release](https://img.shields.io/github/v/release/llama-as-a-service/images-service?color=%233D9970)](https://img.shields.io/github/v/tag/llama-as-a-service/images-service?color=%233D9970)
 
 Image API Service. Built with NodeJS, Express, and Docker. Connects to the MongoDB Image Database.
 
 ## ⚙️ Setup
 ```sh
-$ git clone https://github.com/llama-as-a-service/image-service.git
-$ cd image-service
+$ git clone https://github.com/llama-as-a-service/images-service.git
+$ cd images-service
 $ cp .env.sample .env
 $ docker-compose up -d
 # access on localhost:3000
@@ -15,13 +15,13 @@ $ docker-compose up -d
 
 ## 🧪 Test
 ```sh
-$ docker-compose exec image_service yarn run test
+$ docker-compose exec images_service yarn run test
 ```
 
 ## 📦 Pull from GitHub Repository Container Registry
 ```sh
 # docker pull ghcr.io/OWNER/IMAGE_NAME
-$ docker pull ghcr.io/spencerlepine/express-docker-boilerplate:0.1.0
+$ docker pull ghcr.io/llama-as-a-service/images-service:0.1.0
 ```
 
 ## API Documentation
