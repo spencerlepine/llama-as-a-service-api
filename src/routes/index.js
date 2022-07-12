@@ -7,6 +7,6 @@ const UploadController = require("../controllers/upload")
 
 router.get('/random', RandomController.handleRandomSelect)
 
-router.post('/upload', UploadController.handleUpload)
+// router.post('/upload', UploadController.handleUpload)
 
 module.exports = router
