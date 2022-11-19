@@ -1,9 +1,9 @@
-name: Heroku Deploy
+name: Heroku Deploy [DEPRECATED]
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:

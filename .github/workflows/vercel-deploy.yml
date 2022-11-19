@@ -1,0 +1,32 @@
+# This workflow will do a clean installation of the dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+ 
+name: "Vercel Deploy"
+ 
+on:
+ push:
+ workflow_dispatch:
+ 
+jobs:
+ vercel:
+   runs-on: ubuntu-latest
+   name: "Deploy application"
+   environment: production
+  
+   steps:
+     - uses: actions/checkout@v3
+     - uses: actions/setup-node@v3
+       with:
+         node-version: 16
+         registry-url: https://registry.npmjs.org/
+ 
+     - name: "Deploy application"
+       run: |
+         npm i vercel -g
+         # echo [value] | vercel env add [name] [environment]
+         mongoURI="${{ secrets.MONGO_URI_IMAGES }}"
+         vercel --token ${{ secrets.VERCEL_TOKEN }} env rm MONGO_URI production -y || echo "Failed to remove env var"
+         echo $mongoURI | vercel --token ${{ secrets.VERCEL_TOKEN }} env add MONGO_URI production
+         vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+       env:
+         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
