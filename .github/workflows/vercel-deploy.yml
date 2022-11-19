@@ -28,5 +28,3 @@ jobs:
          vercel --token ${{ secrets.VERCEL_TOKEN }} env rm MONGO_URI production -y || echo "Failed to remove env var"
          echo $mongoURI | vercel --token ${{ secrets.VERCEL_TOKEN }} env add MONGO_URI production
          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
-       env:
-         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
