@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  auth_service:
+    build: .
+    ports:
+      - 7007:7007
+    environment:
+      PORT: 7007
+      MONGO_URI: $MONGO_URI # in .env file

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: laas-auth-load-balancer
+spec:
+  selector:
+    app: llama-as-a-service-auth-api
+  ports:
+    - port: 80
+      targetPort: 7007
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llama-as-a-service-auth-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: laas-auth-service
+  template:
+    metadata:
+      labels:
+        app: laas-auth-service
+    spec:
+      containers:
+        - name:  laas-auth-service
+          image: ghcr.io/llama-as-a-service/auth-service:0.1.1
+          imagePullPolicy: Always #Never
+          ports:
+            - containerPort: 7007
+          env:
+            - name: PORT
+              value: '7007'
+            - name: JWT_TOKEN_KEY
+              value: 250830985034809wfsfg
+            - name: MONGO_URI
+              value: mongodb+srv://admin:IPo1NiAah7L1@laascluster.aknzi.mongodb.net/?retryWrites=true&w=majority

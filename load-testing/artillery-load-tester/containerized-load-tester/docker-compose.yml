@@ -1,0 +1,26 @@
+version: "3"
+services:
+  dummy-server:
+    ports:
+      - "3000:3000" # - "80:3000", API still running on port lol
+    image: laas_api # heroku/nodejs-hello-world
+  perf-test:
+    build: .
+    environment:
+      MAX_LATENCY: 300
+      MIN_RPS: 200
+      TEST_CONFIG: |-
+        config:
+          target: http://dummy-server:3000
+          phases:
+            - duration: 1
+              arrivalRate: 1
+              # rampTo: 50
+              name: "Warm up the application"
+            - duration: 6
+              arrivalRate: 100
+              name: "Sustained max load"
+        scenarios:
+          - flow:
+            - get:
+                url: '/random?count=25'

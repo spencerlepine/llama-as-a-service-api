@@ -1,0 +1,20 @@
+config:
+  processor: './failScript.js'
+  target: http://127.0.0.1:58824 # http://localhost:3000
+  phases:
+    - duration: 1
+      arrivalRate: 10
+      rampTo: 50
+      name: "Warm up the application"
+    - duration: 15
+      arrivalRate: 1200
+      name: "Sustained max load"
+  ensure:
+    p99: 300 # 99% of tests should be below 200ms response time
+    maxErrorRate: 1
+
+scenarios:
+  - flow:
+    - get:
+        url: '/random?count=25'
+        afterResponse: 'exitOnFail'

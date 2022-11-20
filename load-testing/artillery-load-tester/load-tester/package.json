@@ -1,0 +1,14 @@
+{
+  "name": "laas-load-tester",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Spencer Lepine <spencerlepine26@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "artillery run",
+    "report": "artillery report"
+  },
+  "dependencies": {
+    "artillery": "^2.0.0-20"
+  }
+}

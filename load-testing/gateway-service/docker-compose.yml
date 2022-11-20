@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  gateway_api:
+    image: laas_gateway
+    build: .
+    ports:
+      - $PORT:$PORT
+    environment:
+      PORT: $PORT
+      RABBIT_URI: $RABBIT_URI
+      API_IMAGES_URL: $API_IMAGES_URL

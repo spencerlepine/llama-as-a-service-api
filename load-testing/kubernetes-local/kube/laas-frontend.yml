@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: laas-frontend-load-balancer
+spec:
+  selector:
+    app: llama-as-a-service-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llama-as-a-service-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: laas-frontend
+  template:
+    metadata:
+      labels:
+        app: laas-frontend
+    spec:
+      containers:
+        - name:  laas-frontend
+          image: ghcr.io/llama-as-a-service/frontend:0.4.0
+          imagePullPolicy: Always #Never
+          ports:
+            - containerPort: 80
+          env:
+            - name: REACT_APP_GATEWAY_API_URL
+              value: http://laas-gateway-service
+            - name: REACT_APP_AUTH_API_URL
+              value: http://laas-auth-service
+            - name: TOKEN_COOKIE_KEY
+              value: laas-access-token
